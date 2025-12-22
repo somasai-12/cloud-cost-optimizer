@@ -70,38 +70,6 @@ def call_huggingface_api(prompt, model=None):
         logger.error(f"API call error: {e}")
         return None    
 
-
-def extract_json_from_response(response_text):
-    if not response_text:
-        return None
-    
-    try:
-        return json.loads(response_text, strict=False)
-    except json.JSONDecodeError:
-        pass
-
-    json_pattern = r'```(?:json)?\s*\n(.*?)\n```'
-    match = re.search(json_pattern, response_text, re.DOTALL)
-    if match:
-        try:
-            return json.loads(match.group(1), strict=False)
-        except json.JSONDecodeError:
-            pass    
-
-    start_idx = response_text.find('{')
-    if start_idx != -1:
-        end_idx = response_text.rfind('}')
-        if end_idx > start_idx:
-            json_str = response_text[start_idx:end_idx + 1]
-            json_str = re.sub(r',(\s*[}\]])', r'\1', json_str)
-            try:
-                return json.loads(json_str, strict=False)
-            except json.JSONDecodeError:
-                pass
-    
-    return None
-
-
 def clean_json_string(json_str):
 
     if not json_str:
@@ -176,8 +144,8 @@ def call_llm_with_auto_retry(prompt, max_retries=MAX_RETRIES):
         
         data = robust_json_parse(response)
         if data:
-            return response 
-            #return json.dumps(data)
+            #return response 
+            return json.dumps(data) #ensuring that next files can safely get only json
         
         retry_count += 1
         if retry_count < max_retries:
