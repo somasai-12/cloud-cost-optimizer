@@ -112,7 +112,7 @@ def validate_profile(profile):
 
 def validate_billing(billing):
     try:
-        if not isinstance(billing, list):
+        if not isinstance(billing, list) or len(billing) == 0:
             return False, "Billing must be an array"
         if len(billing) < 12 or len(billing)>20:
             return False, f"Billing must have 12-20 records, got {len(billing)}"
