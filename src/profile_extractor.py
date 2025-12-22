@@ -13,11 +13,11 @@ def extract_project_profile(description):
 Description: {description}
 
 You MUST return a valid JSON object with these exact fields:
-- name: (string) Project name extracted from description
+- name: (string) Project name extracted from description which is a Short, professional project name.
 - budget_inr_per_month: (integer) Monthly budget in INR. Handle Indian numbering (e.g. "6,00,000" -> 600000). Remove ALL commas and symbols. Estimate if not explicit.
-- description: (string) Brief description of the project
-- tech_stack: (dictionary) Key-Value pairs of technology. Capture ALL languages, frameworks, and tools mentioned (e.g., "language": "C++, Python etc..", "cloud": "AWS ParallelCluster etc..").
-- non_functional_requirements: (array of strings) List of NFRs (e.g., ["Scalability", "Tolerant", etc..])
+- description: (string) Brief description of the project which is concise 1-sentence summary of given project purpose, Do NOT copy the input text verbatim.
+- tech_stack: (dictionary) Key-Value pairs of technology. Capture ALL languages, frameworks, and tools mentioned (e.g., "language": "C++, Python", "cloud": "AWS ParallelCluster etc..") by Categorizing the technologies into specific roles and choose appropriate keys for technologies.
+- non_functional_requirements: (array of strings) List of NFRs (e.g., ["Scalability", "Tolerant", "Security"])
 
 Return ONLY the JSON object, nothing else. No markdown, no explanations, no extra other than required valid JSON object.
 
@@ -25,7 +25,7 @@ Example format:
 {{
   "name": "Food Delivery App",
   "budget_inr_per_month": 50000,
-  "description": "Mobile app for food delivery",
+  "description": "A scalable mobile application for local food delivery.",
   "tech_stack": {{
       "frontend": "React",
       "backend": "Node.js",
@@ -35,7 +35,7 @@ Example format:
   "non_functional_requirements": ["Scalability", "Cost Efficiency", "High Availability"]
 }}
 
-Now extract from the description above:"""
+Now extract from the description above: and Return ONLY the JSON object. No markdown."""
     
     try:
         logger.info("Extracting project profile...")
@@ -48,7 +48,6 @@ Now extract from the description above:"""
         
         try:
             profile = json.loads(response, strict=False)
-            import re
             budget_match = re.search(r'budget\s*(?:is|of|:)?\s*[\D]*([\d,]+)', description, re.IGNORECASE)
             if budget_match:
                 raw_budget_str = budget_match.group(1)
@@ -69,7 +68,7 @@ Now extract from the description above:"""
                 try:
                     clean_budget = raw_budget.replace(",", "").replace("₹", "").replace("INR", "").strip()
                     profile["budget_inr_per_month"] = int(float(clean_budget))
-                    logger.info(f"Fixed budget format: '{raw_budget}' -> {profile['budget_inr_per_month']}")
+                    #logger.info(f"Fixed budget format: '{raw_budget}' -> {profile['budget_inr_per_month']}")
                 except ValueError:
                     logger.warning(f"Could not parse budget string: {raw_budget}")
                 
@@ -78,8 +77,8 @@ Now extract from the description above:"""
             #logger.error(f"Response was: {response[:200]}") -> debugging responses received
             return None
         
-
-        if not validate_profile(profile):
+        is_valid, msg = validate_profile(profile)
+        if not is_valid:
             logger.error("Profile validation failed: Schema mismatch")
             return None
 
