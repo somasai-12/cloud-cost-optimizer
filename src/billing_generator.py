@@ -8,7 +8,12 @@ logger = get_logger("billing_generator")
 
 def generate_billing(profile):
 
-    budget = profile.get("budget_inr_per_month", 50000)
+    budget = profile.get("budget_inr_per_month")
+
+    if not isinstance(budget, (int, float)):
+        logger.error("Budget missing in project profile")
+        return None
+    
     logger.info(f"Generating billing records for budget: {budget}")
 
     tech_stack = profile.get("tech_stack", {})
@@ -21,23 +26,23 @@ def generate_billing(profile):
 
     current_month = datetime.datetime.now().strftime("%Y-%m")
 
-    cloud_provider = "AWS" #default value
-    if "Azure" in tech_stack_str or "Microsoft" in tech_stack_str:
-        cloud_provider = "Azure"
-    elif "GCP" in tech_stack_str or "Google" in tech_stack_str:
-        cloud_provider = "GCP"
-    #logger.info(f"Detected Cloud Provider: {cloud_provider}")
-
     prompt = f"""Generate realistic cloud usage data for this project.
 
     Project: {profile.get('name')}
     Tech Stack: {tech_stack_str}
     Description: {profile.get('description')}
-    Target Cloud: {cloud_provider}
+
+    IMPORTANT:
+    - Decide the most suitable cloud provider(s) based on the tech stack(AWS, AZURE, GCP, OpenSource).
+    - Do NOT assume any default cloud.
+    - Total monthly cost MUST be within ±15% of budget: ₹{budget}.
+    - You may include AWS, Azure, GCP, or Open Source services. Donot restrict to AWS only.
+    - Higher importance services should cost more.
+
     Generate a JSON array with 12-15 usage records for the MONTH of {current_month}.
     Each record must have:
     - month: "{current_month}" (All records must be for the same month)
-    - service: Valid {cloud_provider} service name (e.g. if Azure: "Virtual Machines", "Blob Storage"; if AWS: "EC2", "S3")
+    - service: Valid cloud provider service name (e.g. if Azure: "Virtual Machines", "Blob Storage"; if AWS: "EC2", "S3")
     - resource_id: unique identifier
     - region: "ap-south-1" or related ones accordingly
     - usage_type: description of what is being used
@@ -66,7 +71,7 @@ def generate_billing(profile):
     total_importance = sum(item.get('importance', 5) for item in billing_data)
     if total_importance == 0: total_importance = 1
 
-    actual_monthly_cost = budget * random.uniform(0.95, 1.05)
+    actual_monthly_cost = budget * random.uniform(0.85, 1.15)
 
     final_billing = []
     current_total = 0
@@ -76,10 +81,10 @@ def generate_billing(profile):
 
         share = (importance/total_importance) * actual_monthly_cost
 
-        cost = round(share,2)
+        cost = int(share)
 
         if i==len(billing_data) - 1:
-            cost = round(actual_monthly_cost - current_total, 2)
+            cost = int(actual_monthly_cost - current_total)
             if cost<0: cost = 100 
         
         current_total+=cost
@@ -92,10 +97,14 @@ def generate_billing(profile):
     
     billing = final_billing
 
+    if current_total > budget * 1.15:
+        logger.error(f"Generated billing exceeds budget excessively")
+        return None
+
     is_valid, message = validate_billing(billing)
     if not is_valid:
         logger.error(f"Billing validation failed: {message}")
         return None
     
-    logger.info(f"✓ Generated {len(billing)} billing records with calculated costs")
+    logger.info(f"✓ Generated {len(billing)} billing records")
     return billing

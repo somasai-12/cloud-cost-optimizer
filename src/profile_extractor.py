@@ -48,38 +48,46 @@ Now extract from the description above: and Return ONLY the JSON object. No mark
         
         try:
             profile = json.loads(response, strict=False)
-            budget_match = re.search(r'budget\s*(?:is|of|:)?\s*[\D]*([\d,]+)', description, re.IGNORECASE)
+            budget_match = re.search(r'budget\s*(?:is|of|:)?\s*[\D]*([\d,]+(?:\.\d+)?)', description, re.IGNORECASE)
             if budget_match:
                 raw_budget_str = budget_match.group(1)
-                clean_budget_str = raw_budget_str.replace(",","").replace(".","") #-> simple interger
+                clean_budget_str = raw_budget_str.replace(",","")
                 try:
-                    regex_budget = int(clean_budget_str)
+                    regex_budget = int(float(clean_budget_str))
                     llm_budget = profile.get("budget_inr_per_month", 0)
-
-                    if not isinstance(llm_budget, (int,float)) or llm_budget != regex_budget:
-                        logger.info(f"Regex override: LLM said {llm_budget}, Regex found {regex_budget} from '{raw_budget_str}'")
-                        profile["budget_inr_per_month"] = regex_budget
+                    if llm_budget != regex_budget:
+                        logger.error(f"Mismatch! LLM: {llm_budget}, Regex: {regex_budget}")
+                        print(f"\n[!] Budget Mismatch: You wrote '{raw_budget_str}' ({regex_budget}), but LLM extracted {llm_budget}.")
+                        print("    Please re-enter the description more clearly.")
+                        return None
                 
                 except ValueError:
                     pass
 
             raw_budget = profile.get("budget_inr_per_month")
+            if not isinstance(raw_budget,(int,float)):
+                logger.error(
+                    "LLM did not return a valid numeric budget_inr_per_month."
+                )
+                return None
             if isinstance(raw_budget, str):
                 try:
                     clean_budget = raw_budget.replace(",", "").replace("₹", "").replace("INR", "").strip()
                     profile["budget_inr_per_month"] = int(float(clean_budget))
-                    #logger.info(f"Fixed budget format: '{raw_budget}' -> {profile['budget_inr_per_month']}")
                 except ValueError:
                     logger.warning(f"Could not parse budget string: {raw_budget}")
                 
         except json.JSONDecodeError as e:
             logger.error(f"Invalid JSON response from LLM: {e}")
-            #logger.error(f"Response was: {response[:200]}") -> debugging responses received
             return None
         
         is_valid, msg = validate_profile(profile)
         if not is_valid:
             logger.error("Profile validation failed: Schema mismatch")
+            return None
+        
+        if not profile.get("non_functional_requirements"):
+            logger.error("Missing non-functional requirements")
             return None
 
         logger.info("✓ Project profile extracted successfully")

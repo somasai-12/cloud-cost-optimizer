@@ -2,7 +2,7 @@ import json
 import re
 import time
 import requests
-from src.config import HUGGINGFACE_API_KEY, LLM_MODEL, API_TIMEOUT, MAX_RETRIES, RETRY_DELAY_SECONDS
+from src.config import HUGGINGFACE_API_KEY, LLM_MODEL, HUGGINGFACE_API_URL, API_TIMEOUT, MAX_RETRIES, RETRY_DELAY_SECONDS
 from src.logger import get_logger
 
 logger = get_logger("llm_utils")
@@ -11,7 +11,7 @@ def call_huggingface_api(prompt, model=None):
     if model is None:
         model = LLM_MODEL
     
-    api_url = "https://router.huggingface.co/v1/chat/completions"
+    api_url = HUGGINGFACE_API_URL
 
     headers = {
         "Authorization": f"Bearer {HUGGINGFACE_API_KEY}",
@@ -131,28 +131,28 @@ def call_llm_with_auto_retry(prompt, max_retries=MAX_RETRIES):
     retry_count = 0
     current_prompt = prompt
     
-    while retry_count < max_retries:
+    while retry_count <= max_retries:
         response = call_huggingface_api(current_prompt)
         
         if response is None:
             retry_count += 1
             if retry_count < max_retries:
-                wait_time = RETRY_DELAY_SECONDS * (2 ** retry_count)
+                wait_time = RETRY_DELAY_SECONDS * (2 ** (retry_count - 1))
                 logger.info(f"Retry {retry_count}/{max_retries} after {wait_time}s...")
                 time.sleep(wait_time)
+                current_prompt = f"{prompt}\n\nPrevious error: No response from API. Please respond."
             continue
         
         data = robust_json_parse(response)
         if data:
-            #return response 
-            return json.dumps(data) #ensuring that next files can safely get only json
+            return json.dumps(data)
         
         retry_count += 1
-        if retry_count < max_retries:
-            current_prompt = f"{prompt}\n\nCRITICAL ERROR: Your previous response was not valid JSON. \n\nRETURN ONLY RAW JSON. NO MARKDOWN. NO COMMENTS.\nEnsure no trailing commas."
-            wait_time = RETRY_DELAY_SECONDS * (2 ** retry_count)
+        if retry_count <= max_retries:
+            wait_time = RETRY_DELAY_SECONDS * (2 ** (retry_count - 1))
             logger.info(f"JSON parsing failed. Retrying with stricter prompt in {wait_time}s...")
             time.sleep(wait_time)
+            current_prompt = f"{prompt}\n\nCRITICAL ERROR: Your previous response was not valid JSON. \n\nRETURN ONLY RAW JSON. NO MARKDOWN. NO COMMENTS.\nEnsure no trailing commas."
     
     logger.error(f"Failed after {max_retries} retries")
     return None

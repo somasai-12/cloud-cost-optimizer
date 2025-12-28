@@ -1,12 +1,11 @@
-import json
-import os
+import html
 from src.logger import get_logger
 
 logger = get_logger("html_exporter")
 
-def export_to_html(report, output_path = "outputs/cost_optimization_report.html"):
+def export_to_html(report, output_path="outputs/cost_optimization_report.html"):
     try:
-        project_name = report.get("project_name", "Project")
+        project_name = html.escape(report.get("project_name", "Project"))
         analysis = report.get("analysis", {})
         recommendations = report.get("recommendations", [])
         summary = report.get("summary", {})
@@ -17,7 +16,7 @@ def export_to_html(report, output_path = "outputs/cost_optimization_report.html"
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cost Optimization Report - {project_name}</title>
+    <title>Cost Optimization Report - {html.escape(project_name)}</title>
     <style>
         body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 1200px; margin: 0 auto; padding: 20px; background-color: #f4f7f6; }}
         header {{ background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }}
@@ -44,7 +43,7 @@ def export_to_html(report, output_path = "outputs/cost_optimization_report.html"
 
 <header>
     <h1>Cloud Cost Optimization Report</h1>
-    <p>{project_name}</p>
+    <p>{html.escape(project_name)}</p>
 </header>
 
 <div class="card">
@@ -84,38 +83,38 @@ def export_to_html(report, output_path = "outputs/cost_optimization_report.html"
         for service, cost in analysis.get('service_costs', {}).items():
             html_content += f"""
             <tr>
-                <td>{service}</td>
+                <td>{html.escape(str(service))}</td>
                 <td>₹{cost}</td>
                 <td>{'High' if service in analysis.get('high_cost_services', {}) else 'Normal'}</td>
             </tr>
-            """
+"""
 
         html_content += """
         </tbody>
     </table>
 </div>
 
-<h2>💡 Recommendations</h2>
+<h2>Recommendations</h2>
 """
         for rec in recommendations:
             html_content += f"""
 <div class="rec-card">
     <div class="rec-header">
-        <div class="rec-title">{rec.get('title')}</div>
+        <div class="rec-title">{html.escape(rec.get('title', 'N/A'))}</div>
         <div>
-            <span class="badge badge-savings">Save ₹{rec.get('potential_savings')}</span>
-            <span class="badge badge-effort">{rec.get('implementation_effort', 'medium').upper()} Effort</span>
+            <span class="badge badge-savings">Save ₹{rec.get('potential_savings', 0)}</span>
+            <span class="badge badge-effort">{html.escape(rec.get('implementation_effort', 'medium').upper())} Effort</span>
         </div>
     </div>
-    <p><strong>Service:</strong> {rec.get('service')} | <strong>Type:</strong> {rec.get('recommendation_type')}</p>
-    <p>{rec.get('description')}</p>
+    <p><strong>Service:</strong> {html.escape(rec.get('service', 'N/A'))} | <strong>Type:</strong> {html.escape(rec.get('recommendation_type', 'N/A'))}</p>
+    <p>{html.escape(rec.get('description', 'N/A'))}</p>
     
     <div class="steps">
         <strong>Implementation Steps:</strong>
         <ol>
 """
             for step in rec.get('steps', []):
-                html_content += f"<li>{step}</li>"
+                html_content += f"<li>{html.escape(step)}</li>"
             
             html_content += """
         </ol>
@@ -123,7 +122,7 @@ def export_to_html(report, output_path = "outputs/cost_optimization_report.html"
     
     <p style="margin-top: 10px;">
         <strong>Cloud Providers:</strong> 
-        """ + ", ".join(rec.get('cloud_providers', [])) + """
+        """ + ", ".join([html.escape(p) for p in rec.get('cloud_providers', [])]) + """
     </p>
 </div>
 """

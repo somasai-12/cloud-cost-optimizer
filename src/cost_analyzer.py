@@ -4,7 +4,11 @@ logger = get_logger("cost_analyzer")
 
 def analyze_costs(profile, billing):
 
-    budget = profile.get("budget_inr_per_month", 50000)
+    budget = profile.get("budget_inr_per_month")
+
+    if not isinstance(budget, (int, float)):
+        logger.error("Budget missing or invalid in project profile")
+        return None
 
     service_costs = calculate_service_costs(billing)
 
@@ -18,15 +22,15 @@ def analyze_costs(profile, billing):
         for service, cost in service_costs.items():
             percentage = (cost/total_cost)*100
             if percentage>20:
-                high_cost_services[service] = round(cost,2)
+                high_cost_services[service] = int(cost)
 
     is_over_budget = total_cost > budget
 
     analysis = {
-        "total_monthly_cost": round(total_cost, 2),
+        "total_monthly_cost": int(total_cost),
         "budget": budget,
-        "budget_variance": round(variance, 2),
-        "service_costs": {k: round(v, 2) for k, v in service_costs.items()},
+        "budget_variance": int(variance),
+        "service_costs": {k: int(v) for k, v in service_costs.items()},
         "high_cost_services": high_cost_services,
         "is_over_budget": is_over_budget
     }

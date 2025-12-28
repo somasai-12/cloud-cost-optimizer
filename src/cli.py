@@ -77,56 +77,58 @@ def display_menu():
     print("=" * 60)
 
 def option_1_enter_description():
-
     print("\n" + "-" * 60)
     print("ENTER PROJECT DESCRIPTION")
     print("-" * 60)
-    print("Describe your cloud project (press Enter twice when done):")
-    print()
-    
-    lines = []
     while True:
-        line = input()
-        if line == "":
-            if len(lines) > 0 and lines[-1] == "":
-                lines.pop()
-                break
-            lines.append(line)
-        else:
-            lines.append(line)
-    
-    description = "\n".join(lines).strip()
-    
-    if len(description) < 10:
-        print("Description too short. Please provide more details.\n")
-        return
-    
-    if not save_text(DESCRIPTION_FILE, description):
-        print("Failed to save description\n")
-        return
-    
-    print()
-    
-    while True:
+        print("Describe your cloud project (press Enter twice when done):")
+        print()
+        
+        lines = []
+        while True:
+            line = input()
+            if line == "":
+                if len(lines) > 0 and lines[-1] == "":
+                    lines.pop()
+                    break
+                lines.append(line)
+            else:
+                lines.append(line)
+        
+        description = "\n".join(lines).strip()
+        
+        if len(description) < 10:
+            print("Description too short. Please provide more details.\n")
+            continue
+        
+        if not save_text(DESCRIPTION_FILE, description):
+            print("Failed to save description\n")
+            return
+        
+        print()
+        
+        profile = None
         with Spinner("Extracting project profile ..."):
             profile = extract_project_profile(description)
-        
-        if profile:
-            break
             
+        if profile:
+            if not save_json(PROFILE_FILE, profile):
+                print("\nFailed to save profile\n")
+                return
+            
+            print("\n✓ Project profile extracted and saved!")
+            print(f"Project: {profile.get('name')}")
+            print(f"Budget: ₹{profile.get('budget_inr_per_month')}/month")
+            print(f"Tech Stack: {profile.get('tech_stack')}\n")
+            break
         print("\nFailed to extract profile.")
-        retry = input("   Retry? (y/n): ").strip().lower()
+        retry = input("   check for budget feasibility for given description\n   Try again with a NEW description? (y/n): ").strip().lower()
         if retry != 'y':
             return
-        print()
-    if not save_json(PROFILE_FILE, profile):
-        print("\nFailed to save profile\n")
-        return
-    
-    print("\n✓ Project profile extracted and saved!")
-    print(f"Project: {profile.get('name')}")
-    print(f"Budget: ₹{profile.get('budget_inr_per_month')}/month")
-    print(f"Tech Stack: {profile.get('tech_stack')}\n")
+        
+        print("\n" + "-" * 60)
+        print("RE-ENTER PROJECT DESCRIPTION")
+        print("-" * 60)
 
 def option_2_run_analysis():
 
@@ -189,7 +191,9 @@ def option_2_run_analysis():
     report = build_cost_optimization_report(profile, analysis, recommendations)
     if not report:
         print("Failed to build report\n")
-        return
+        retry = input("   Retry? (y/n): ").strip().lower()
+        if retry != 'y':
+            return
     
     if not save_json(REPORT_FILE, report):
         print("Failed to save report\n")

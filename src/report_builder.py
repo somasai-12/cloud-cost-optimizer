@@ -26,16 +26,16 @@ def calculate_summary(recommendations, analysis):
     total_savings = sum([rec.get("potential_savings", 0) for rec in recommendations])
     total_cost = analysis.get("total_monthly_cost", 1)
 
-    max_savings_possible = total_cost*0.60
+    max_savings_possible = total_cost*0.70
 
     if total_savings >  max_savings_possible:
-        logger.info(f"Capping global savings from {total_savings} to {max_savings_possible} (60% limit)")
+        logger.info(f"changed global savings from {total_savings} to {max_savings_possible} (70% limit)")
         total_savings = max_savings_possible
 
     savings_percentage = (total_savings / total_cost * 100) if total_cost > 0 else 0
 
     summary = {
-        "total_potential_savings": round(total_savings, 2),
+        "total_potential_savings": int(total_savings),
         "savings_percentage": round(savings_percentage, 2),
         "recommendations_count": len(recommendations)
     }
