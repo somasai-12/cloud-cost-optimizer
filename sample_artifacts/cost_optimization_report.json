@@ -1,0 +1,187 @@
+{
+  "project_name": "Food Delivery App",
+  "analysis": {
+    "total_monthly_cost": 43764,
+    "budget": 50000,
+    "budget_variance": -6236,
+    "service_costs": {
+      "Azure PostgreSQL": 6732,
+      "Google Cloud Storage": 5048,
+      "Azure Virtual Machines": 7574,
+      "Azure Monitor": 2104,
+      "Azure Application Insights": 2945,
+      "AWS EC2": 7574,
+      "AWS S3": 5048,
+      "Azure Cosmos DB": 6739
+    },
+    "high_cost_services": {},
+    "is_over_budget": false
+  },
+  "recommendations": [
+    {
+      "title": "Migrate to PostgreSQL Free Tier",
+      "service": "Azure PostgreSQL",
+      "current_cost": 6732,
+      "potential_savings": 3386,
+      "recommendation_type": "free_tier",
+      "description": "PostgreSQL offers a free tier plan for small projects, which can be used instead of the paid plan.",
+      "implementation_effort": "low",
+      "risk_level": "low",
+      "steps": [
+        "Check if the free tier plan meets the project's requirements.",
+        "Migrate the database to the free tier plan.",
+        "Monitor the performance and adjust the plan if needed."
+      ],
+      "cloud_providers": [
+        "Azure",
+        "Google Cloud SQL (PostgreSQL)",
+        "Open Source (e.g., PostgreSQL Community Edition)"
+      ]
+    },
+    {
+      "title": "Downsize Azure Virtual Machines",
+      "service": "Azure Virtual Machines",
+      "current_cost": 7574,
+      "potential_savings": 3817,
+      "recommendation_type": "right_sizing",
+      "description": "Check if the current virtual machine instance sizes are optimized for the project's workload.",
+      "implementation_effort": "medium",
+      "risk_level": "medium",
+      "steps": [
+        "Assess the current virtual machine instance sizes and their usage.",
+        "Downsize the instances to the minimum required size.",
+        "Monitor the performance and adjust the sizes if needed."
+      ],
+      "cloud_providers": [
+        "Azure",
+        "Google Cloud Compute Engine",
+        "Open Source (e.g., KVM or Xen)"
+      ]
+    },
+    {
+      "title": "Use Amazon S3 Transfer Acceleration",
+      "service": "AWS S3",
+      "current_cost": 5048,
+      "potential_savings": 2524,
+      "recommendation_type": "optimization",
+      "description": "Use Amazon S3 Transfer Acceleration to reduce the time it takes to upload and download objects.",
+      "implementation_effort": "low",
+      "risk_level": "low",
+      "steps": [
+        "Enable Transfer Acceleration for the S3 bucket.",
+        "Test the upload and download speeds.",
+        "Monitor the performance and adjust the settings if needed."
+      ],
+      "cloud_providers": [
+        "AWS",
+        "Azure Blob Storage",
+        "Google Cloud Storage"
+      ]
+    },
+    {
+      "title": "Implement Retention Policy for Azure Cosmos DB",
+      "service": "Azure Cosmos DB",
+      "current_cost": 6739,
+      "potential_savings": 3369.5,
+      "recommendation_type": "optimization",
+      "description": "Implement a retention policy to store only the required data for the project.",
+      "implementation_effort": "medium",
+      "risk_level": "medium",
+      "steps": [
+        "Assess the data retention requirements for the project.",
+        "Implement a retention policy for Azure Cosmos DB.",
+        "Monitor the data storage and adjust the policy if needed."
+      ],
+      "cloud_providers": [
+        "Azure",
+        "Google Cloud Firestore",
+        "Open Source (e.g., Couchbase)"
+      ]
+    },
+    {
+      "title": "Migrate to Google Cloud Storage Standard Storage",
+      "service": "Google Cloud Storage",
+      "current_cost": 5048,
+      "potential_savings": 2524,
+      "recommendation_type": "alternative_provider",
+      "description": "Consider using Google Cloud Storage Standard Storage instead of Nearline Storage for less frequently accessed data.",
+      "implementation_effort": "low",
+      "risk_level": "low",
+      "steps": [
+        "Assess the data access patterns for the project.",
+        "Migrate the data to Standard Storage.",
+        "Monitor the performance and adjust the storage type if needed."
+      ],
+      "cloud_providers": [
+        "Google Cloud Storage",
+        "Azure Blob Storage",
+        "Amazon S3"
+      ]
+    },
+    {
+      "title": "Use Azure Monitor Log Analytics",
+      "service": "Azure Monitor",
+      "current_cost": 2104,
+      "potential_savings": 1052,
+      "recommendation_type": "optimization",
+      "description": "Use Azure Monitor Log Analytics to reduce the cost of log storage and analysis.",
+      "implementation_effort": "medium",
+      "risk_level": "medium",
+      "steps": [
+        "Assess the log storage requirements for the project.",
+        "Implement Log Analytics for Azure Monitor.",
+        "Monitor the log storage and adjust the settings if needed."
+      ],
+      "cloud_providers": [
+        "Azure",
+        "Google Cloud Logging",
+        "Open Source (e.g., ELK Stack)"
+      ]
+    },
+    {
+      "title": "Downsize AWS EC2 Instances",
+      "service": "AWS EC2",
+      "current_cost": 7574,
+      "potential_savings": 3787,
+      "recommendation_type": "right_sizing",
+      "description": "Check if the current EC2 instance sizes are optimized for the project's workload.",
+      "implementation_effort": "medium",
+      "risk_level": "medium",
+      "steps": [
+        "Assess the current EC2 instance sizes and their usage.",
+        "Downsize the instances to the minimum required size.",
+        "Monitor the performance and adjust the sizes if needed."
+      ],
+      "cloud_providers": [
+        "AWS",
+        "Azure Virtual Machines",
+        "Google Cloud Compute Engine"
+      ]
+    },
+    {
+      "title": "Use Open Source Monitoring Tools",
+      "service": "Azure Application Insights",
+      "current_cost": 2945,
+      "potential_savings": 1472.5,
+      "recommendation_type": "opensource",
+      "description": "Consider using open-source monitoring tools like Prometheus or Grafana instead of Application Insights.",
+      "implementation_effort": "high",
+      "risk_level": "high",
+      "steps": [
+        "Assess the monitoring requirements for the project.",
+        "Implement open-source monitoring tools.",
+        "Monitor the performance and adjust the tools if needed."
+      ],
+      "cloud_providers": [
+        "Azure",
+        "Google Cloud Monitoring",
+        "Open Source (e.g., Prometheus, Grafana)"
+      ]
+    }
+  ],
+  "summary": {
+    "total_potential_savings": 21932,
+    "savings_percentage": 50.11,
+    "recommendations_count": 8
+  }
+}

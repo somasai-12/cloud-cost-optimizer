@@ -40,12 +40,12 @@ Each recommendation must have EXACTLY these fields:
 - implementation_effort: one of [low, medium, high]
 - risk_level: one of [low, medium, high]
 - steps: array of 3-5 implementation steps as strings
-- cloud_providers: array of strings listing current cloud providers AND valid alternate cloud providers (e.g. ["AWS", "Azure", "GCP"] if the service exists on included one).
+- cloud_providers: array of strings listing cloud providers AND valid alternate cloud providers with OPEN SOURCE if applicable.
 
 IMPORTANT REQUIREMENTS:
 1. Generate 7-10 recommendations
 2. Prioritize high-cost services, but DO NOT skip remaining services.
-3. Include at least 3 multi-cloud or open-source recommendations if applicable.Donot Restrict cloud providers to AWS only.
+3. Include multi-cloud and open-source recommendations if both applicable. Donot Restrict cloud providers to AWS only.
 4. Potential savings should be realistic (10-50% of current cost)
 5. All steps should be actionable
 6. Do NOT invent abstract services (e.g., images, logs, files).

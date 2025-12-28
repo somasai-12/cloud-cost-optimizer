@@ -1,0 +1,17 @@
+{
+  "name": "Food Delivery App",
+  "budget_inr_per_month": 50000,
+  "description": "Developing a food delivery app for 10,000 users per month.",
+  "tech_stack": {
+    "backend": "Node.js",
+    "database": "PostgreSQL",
+    "storage": "object storage",
+    "monitoring": "monitoring",
+    "analytics": "basic analytics"
+  },
+  "non_functional_requirements": [
+    "Scalability",
+    "Cost efficiency",
+    "Uptime monitoring"
+  ]
+}

@@ -14,14 +14,14 @@ Description: {description}
 
 You MUST return a valid JSON object with these exact fields:
 - name: (string) Project name extracted from description which is a Short, professional project name.
-- budget_inr_per_month: (integer) Monthly budget in INR. Handle Indian numbering (e.g. "6,00,000" -> 600000). Remove ALL commas and symbols. Estimate if not explicit.
+- budget_inr_per_month: (integer) Monthly budget in INR.(Important)Value mentioned should be from description only. Handle Indian numbering (e.g. "6,00,000" -> 600000). Remove ALL commas and symbols.(Important) If not mentioned donot return this field.
 - description: (string) Brief description of the project which is concise 1-sentence summary of given project purpose, Do NOT copy the input text verbatim.
 - tech_stack: (dictionary) Key-Value pairs of technology. Capture ALL languages, frameworks, and tools mentioned (e.g., "language": "C++, Python", "cloud": "AWS ParallelCluster etc..") by Categorizing the technologies into specific roles and choose appropriate keys for technologies.
 - non_functional_requirements: (array of strings) List of NFRs (e.g., ["Scalability", "Tolerant", "Security"])
 
 Return ONLY the JSON object, nothing else. No markdown, no explanations, no extra other than required valid JSON object.
 
-Example format:
+Example format(For format only):
 {{
   "name": "Food Delivery App",
   "budget_inr_per_month": 50000,
@@ -34,6 +34,9 @@ Example format:
   }},
   "non_functional_requirements": ["Scalability", "Cost Efficiency", "High Availability"]
 }}
+
+-Important:
+1. If no budget(in INR or ₹) is present in description then donot return JSON object only.
 
 Now extract from the description above: and Return ONLY the JSON object. No markdown."""
     
@@ -55,11 +58,12 @@ Now extract from the description above: and Return ONLY the JSON object. No mark
                 try:
                     regex_budget = int(float(clean_budget_str))
                     llm_budget = profile.get("budget_inr_per_month", 0)
+                    if llm_budget == 0:
+                        return None
                     if llm_budget != regex_budget:
                         logger.error(f"Mismatch! LLM: {llm_budget}, Regex: {regex_budget}")
                         print(f"\n[!] Budget Mismatch: You wrote '{raw_budget_str}' ({regex_budget}), but LLM extracted {llm_budget}.")
-                        print("    Please re-enter the description more clearly.")
-                        return None
+                        profile["budget_inr_per_month"] = regex_budget
                 
                 except ValueError:
                     pass

@@ -1,0 +1,156 @@
+[
+  {
+    "month": "2025-12",
+    "service": "Azure PostgreSQL",
+    "resource_id": "postgresql-1",
+    "region": "India Central",
+    "usage_type": "Storage",
+    "usage_quantity": 100,
+    "unit": "GB",
+    "desc": "Database Storage",
+    "cost_inr": 3366
+  },
+  {
+    "month": "2025-12",
+    "service": "Azure PostgreSQL",
+    "resource_id": "postgresql-1",
+    "region": "India Central",
+    "usage_type": "Compute",
+    "usage_quantity": 720,
+    "unit": "hours",
+    "desc": "Database Compute",
+    "cost_inr": 3366
+  },
+  {
+    "month": "2025-12",
+    "service": "Google Cloud Storage",
+    "resource_id": "gs-1",
+    "region": "asia-south1",
+    "usage_type": "Storage",
+    "usage_quantity": 50,
+    "unit": "GB",
+    "desc": "Image Storage",
+    "cost_inr": 2524
+  },
+  {
+    "month": "2025-12",
+    "service": "Google Cloud Storage",
+    "resource_id": "gs-1",
+    "region": "asia-south1",
+    "usage_type": "Requests",
+    "usage_quantity": 1000,
+    "unit": "requests",
+    "desc": "Image Requests",
+    "cost_inr": 2524
+  },
+  {
+    "month": "2025-12",
+    "service": "Azure Virtual Machines",
+    "resource_id": "vm-1",
+    "region": "India Central",
+    "usage_type": "Compute",
+    "usage_quantity": 24,
+    "unit": "hours",
+    "desc": "Server Compute",
+    "cost_inr": 3787
+  },
+  {
+    "month": "2025-12",
+    "service": "Azure Virtual Machines",
+    "resource_id": "vm-1",
+    "region": "India Central",
+    "usage_type": "Storage",
+    "usage_quantity": 20,
+    "unit": "GB",
+    "desc": "Server Storage",
+    "cost_inr": 3787
+  },
+  {
+    "month": "2025-12",
+    "service": "Azure Monitor",
+    "resource_id": "monitor-1",
+    "region": "India Central",
+    "usage_type": "Log Analytics",
+    "usage_quantity": 500,
+    "unit": "MB",
+    "desc": "Log Analytics",
+    "cost_inr": 2104
+  },
+  {
+    "month": "2025-12",
+    "service": "Azure Application Insights",
+    "resource_id": "ai-1",
+    "region": "India Central",
+    "usage_type": "Data Ingestion",
+    "usage_quantity": 2000,
+    "unit": "requests",
+    "desc": "Data Ingestion",
+    "cost_inr": 2945
+  },
+  {
+    "month": "2025-12",
+    "service": "AWS EC2",
+    "resource_id": "ec2-1",
+    "region": "ap-south-1",
+    "usage_type": "Compute",
+    "usage_quantity": 48,
+    "unit": "hours",
+    "desc": "Server Compute",
+    "cost_inr": 3787
+  },
+  {
+    "month": "2025-12",
+    "service": "AWS EC2",
+    "resource_id": "ec2-1",
+    "region": "ap-south-1",
+    "usage_type": "Storage",
+    "usage_quantity": 10,
+    "unit": "GB",
+    "desc": "Server Storage",
+    "cost_inr": 3787
+  },
+  {
+    "month": "2025-12",
+    "service": "AWS S3",
+    "resource_id": "s3-1",
+    "region": "ap-south-1",
+    "usage_type": "Storage",
+    "usage_quantity": 30,
+    "unit": "GB",
+    "desc": "Image Storage",
+    "cost_inr": 2524
+  },
+  {
+    "month": "2025-12",
+    "service": "AWS S3",
+    "resource_id": "s3-1",
+    "region": "ap-south-1",
+    "usage_type": "Requests",
+    "usage_quantity": 500,
+    "unit": "requests",
+    "desc": "Image Requests",
+    "cost_inr": 2524
+  },
+  {
+    "month": "2025-12",
+    "service": "Azure Cosmos DB",
+    "resource_id": "cdb-1",
+    "region": "India Central",
+    "usage_type": "Storage",
+    "usage_quantity": 10,
+    "unit": "GB",
+    "desc": "Database Storage",
+    "cost_inr": 3366
+  },
+  {
+    "month": "2025-12",
+    "service": "Azure Cosmos DB",
+    "resource_id": "cdb-1",
+    "region": "India Central",
+    "usage_type": "Request Units",
+    "usage_quantity": 1000,
+    "unit": "RU/s",
+    "desc": "Database Requests",
+    "cost_inr": 3373
+  }
+]
