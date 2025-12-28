@@ -21,7 +21,7 @@ def analyze_costs(profile, billing):
     if total_cost > 0:
         for service, cost in service_costs.items():
             percentage = (cost/total_cost)*100
-            if percentage>20:
+            if percentage>15:
                 high_cost_services[service] = int(cost)
 
     is_over_budget = total_cost > budget

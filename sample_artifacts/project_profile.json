@@ -1,17 +1,16 @@
 {
-  "name": "Food Delivery App",
-  "budget_inr_per_month": 50000,
-  "description": "Developing a food delivery app for 10,000 users per month.",
+  "name": "College Project Website",
+  "budget_inr_per_month": 15000,
+  "description": "Development of a website using MERN stack for a college project.",
   "tech_stack": {
-    "backend": "Node.js",
-    "database": "PostgreSQL",
-    "storage": "object storage",
-    "monitoring": "monitoring",
-    "analytics": "basic analytics"
+    "frontend": "React",
+    "backend": "Express.js",
+    "database": "MongoDB",
+    "cloud": "AWS"
   },
   "non_functional_requirements": [
     "Scalability",
-    "Cost efficiency",
-    "Uptime monitoring"
+    "Cost Efficiency",
+    "High Availability"
   ]
 }

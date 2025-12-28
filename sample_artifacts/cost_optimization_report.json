@@ -1,187 +1,194 @@
 {
-  "project_name": "Food Delivery App",
+  "project_name": "College Project Website",
   "analysis": {
-    "total_monthly_cost": 43764,
-    "budget": 50000,
-    "budget_variance": -6236,
+    "total_monthly_cost": 14630,
+    "budget": 15000,
+    "budget_variance": -370,
     "service_costs": {
-      "Azure PostgreSQL": 6732,
-      "Google Cloud Storage": 5048,
-      "Azure Virtual Machines": 7574,
-      "Azure Monitor": 2104,
-      "Azure Application Insights": 2945,
-      "AWS EC2": 7574,
-      "AWS S3": 5048,
-      "Azure Cosmos DB": 6739
+      "EC2": 1995,
+      "RDS": 1773,
+      "S3": 1551,
+      "API Gateway": 1330,
+      "CloudFront": 1108,
+      "Lambda": 886,
+      "CloudWatch Logs": 665,
+      "CloudTrail": 443,
+      "X-Ray": 221,
+      "Route 53": 1773,
+      "SES": 1551,
+      "CloudFormation": 1334
     },
     "high_cost_services": {},
     "is_over_budget": false
   },
   "recommendations": [
     {
-      "title": "Migrate to PostgreSQL Free Tier",
-      "service": "Azure PostgreSQL",
-      "current_cost": 6732,
-      "potential_savings": 3386,
-      "recommendation_type": "free_tier",
-      "description": "PostgreSQL offers a free tier plan for small projects, which can be used instead of the paid plan.",
-      "implementation_effort": "low",
-      "risk_level": "low",
-      "steps": [
-        "Check if the free tier plan meets the project's requirements.",
-        "Migrate the database to the free tier plan.",
-        "Monitor the performance and adjust the plan if needed."
-      ],
-      "cloud_providers": [
-        "Azure",
-        "Google Cloud SQL (PostgreSQL)",
-        "Open Source (e.g., PostgreSQL Community Edition)"
-      ]
-    },
-    {
-      "title": "Downsize Azure Virtual Machines",
-      "service": "Azure Virtual Machines",
-      "current_cost": 7574,
-      "potential_savings": 3817,
-      "recommendation_type": "right_sizing",
-      "description": "Check if the current virtual machine instance sizes are optimized for the project's workload.",
-      "implementation_effort": "medium",
-      "risk_level": "medium",
-      "steps": [
-        "Assess the current virtual machine instance sizes and their usage.",
-        "Downsize the instances to the minimum required size.",
-        "Monitor the performance and adjust the sizes if needed."
-      ],
-      "cloud_providers": [
-        "Azure",
-        "Google Cloud Compute Engine",
-        "Open Source (e.g., KVM or Xen)"
-      ]
-    },
-    {
-      "title": "Use Amazon S3 Transfer Acceleration",
-      "service": "AWS S3",
-      "current_cost": 5048,
-      "potential_savings": 2524,
-      "recommendation_type": "optimization",
-      "description": "Use Amazon S3 Transfer Acceleration to reduce the time it takes to upload and download objects.",
-      "implementation_effort": "low",
-      "risk_level": "low",
-      "steps": [
-        "Enable Transfer Acceleration for the S3 bucket.",
-        "Test the upload and download speeds.",
-        "Monitor the performance and adjust the settings if needed."
-      ],
-      "cloud_providers": [
-        "AWS",
-        "Azure Blob Storage",
-        "Google Cloud Storage"
-      ]
-    },
-    {
-      "title": "Implement Retention Policy for Azure Cosmos DB",
-      "service": "Azure Cosmos DB",
-      "current_cost": 6739,
-      "potential_savings": 3369.5,
-      "recommendation_type": "optimization",
-      "description": "Implement a retention policy to store only the required data for the project.",
-      "implementation_effort": "medium",
-      "risk_level": "medium",
-      "steps": [
-        "Assess the data retention requirements for the project.",
-        "Implement a retention policy for Azure Cosmos DB.",
-        "Monitor the data storage and adjust the policy if needed."
-      ],
-      "cloud_providers": [
-        "Azure",
-        "Google Cloud Firestore",
-        "Open Source (e.g., Couchbase)"
-      ]
-    },
-    {
-      "title": "Migrate to Google Cloud Storage Standard Storage",
-      "service": "Google Cloud Storage",
-      "current_cost": 5048,
-      "potential_savings": 2524,
+      "title": "Migrate EC2 to Open Source Kubernetes",
+      "service": "EC2",
+      "current_cost": 1995,
+      "potential_savings": 495,
       "recommendation_type": "alternative_provider",
-      "description": "Consider using Google Cloud Storage Standard Storage instead of Nearline Storage for less frequently accessed data.",
-      "implementation_effort": "low",
-      "risk_level": "low",
-      "steps": [
-        "Assess the data access patterns for the project.",
-        "Migrate the data to Standard Storage.",
-        "Monitor the performance and adjust the storage type if needed."
-      ],
-      "cloud_providers": [
-        "Google Cloud Storage",
-        "Azure Blob Storage",
-        "Amazon S3"
-      ]
-    },
-    {
-      "title": "Use Azure Monitor Log Analytics",
-      "service": "Azure Monitor",
-      "current_cost": 2104,
-      "potential_savings": 1052,
-      "recommendation_type": "optimization",
-      "description": "Use Azure Monitor Log Analytics to reduce the cost of log storage and analysis.",
-      "implementation_effort": "medium",
+      "description": "Replace EC2 with an open-source Kubernetes cluster, which can provide significant cost savings and improved scalability.",
+      "implementation_effort": "high",
       "risk_level": "medium",
       "steps": [
-        "Assess the log storage requirements for the project.",
-        "Implement Log Analytics for Azure Monitor.",
-        "Monitor the log storage and adjust the settings if needed."
-      ],
-      "cloud_providers": [
-        "Azure",
-        "Google Cloud Logging",
-        "Open Source (e.g., ELK Stack)"
-      ]
-    },
-    {
-      "title": "Downsize AWS EC2 Instances",
-      "service": "AWS EC2",
-      "current_cost": 7574,
-      "potential_savings": 3787,
-      "recommendation_type": "right_sizing",
-      "description": "Check if the current EC2 instance sizes are optimized for the project's workload.",
-      "implementation_effort": "medium",
-      "risk_level": "medium",
-      "steps": [
-        "Assess the current EC2 instance sizes and their usage.",
-        "Downsize the instances to the minimum required size.",
-        "Monitor the performance and adjust the sizes if needed."
+        "Create a Kubernetes cluster on a cloud provider like GCP or Azure",
+        "Migrate the application to the new Kubernetes cluster",
+        "Configure the cluster for auto-scaling and resource optimization"
       ],
       "cloud_providers": [
         "AWS",
-        "Azure Virtual Machines",
-        "Google Cloud Compute Engine"
+        "GCP",
+        "Azure",
+        "Open Source (Kubernetes)"
       ]
     },
     {
-      "title": "Use Open Source Monitoring Tools",
-      "service": "Azure Application Insights",
-      "current_cost": 2945,
-      "potential_savings": 1472.5,
-      "recommendation_type": "opensource",
-      "description": "Consider using open-source monitoring tools like Prometheus or Grafana instead of Application Insights.",
-      "implementation_effort": "high",
-      "risk_level": "high",
+      "title": "Downsize RDS Instance",
+      "service": "RDS",
+      "current_cost": 1773,
+      "potential_savings": 177,
+      "recommendation_type": "right_sizing",
+      "description": "Downsize the RDS instance to a smaller instance type to reduce costs.",
+      "implementation_effort": "low",
+      "risk_level": "low",
       "steps": [
-        "Assess the monitoring requirements for the project.",
-        "Implement open-source monitoring tools.",
-        "Monitor the performance and adjust the tools if needed."
+        "Monitor the database usage and determine the optimal instance type",
+        "Downsize the RDS instance to the new type",
+        "Verify the database performance and adjust as needed"
       ],
       "cloud_providers": [
+        "AWS",
+        "GCP",
+        "Azure"
+      ]
+    },
+    {
+      "title": "Utilize S3 Infrequent Access Storage",
+      "service": "S3",
+      "current_cost": 1551,
+      "potential_savings": 155,
+      "recommendation_type": "cost-effective_storage",
+      "description": "Store infrequently accessed data in S3's Infrequent Access Storage to reduce costs.",
+      "implementation_effort": "medium",
+      "risk_level": "medium",
+      "steps": [
+        "Identify infrequently accessed data and move it to S3 Infrequent Access Storage",
+        "Configure the storage class for the data",
+        "Verify data accessibility and adjust as needed"
+      ],
+      "cloud_providers": [
+        "AWS",
+        "GCP",
         "Azure",
-        "Google Cloud Monitoring",
-        "Open Source (e.g., Prometheus, Grafana)"
+        "Open Source (MinIO)"
+      ]
+    },
+    {
+      "title": "Implement API Gateway Usage Plans",
+      "service": "API Gateway",
+      "current_cost": 1330,
+      "potential_savings": 0,
+      "recommendation_type": "optimization",
+      "description": "Implement usage plans to throttle and meter API usage, reducing unnecessary costs.",
+      "implementation_effort": "medium",
+      "risk_level": "medium",
+      "steps": [
+        "Configure usage plans for the API",
+        "Implement throttling and metering for the API",
+        "Monitor and adjust usage plans as needed"
+      ],
+      "cloud_providers": [
+        "AWS",
+        "GCP",
+        "Azure"
+      ]
+    },
+    {
+      "title": "Optimize CloudFront Distribution",
+      "service": "CloudFront",
+      "current_cost": 1108,
+      "potential_savings": 110,
+      "recommendation_type": "optimization",
+      "description": "Optimize the CloudFront distribution to reduce costs by caching and compressing content.",
+      "implementation_effort": "medium",
+      "risk_level": "medium",
+      "steps": [
+        "Configure caching and compression for the distribution",
+        "Verify the distribution's performance and adjust as needed",
+        "Monitor and adjust the distribution's settings"
+      ],
+      "cloud_providers": [
+        "AWS",
+        "GCP",
+        "Azure"
+      ]
+    },
+    {
+      "title": "Migrate Lambda to Open Source Function-as-a-Service",
+      "service": "Lambda",
+      "current_cost": 886,
+      "potential_savings": 89,
+      "recommendation_type": "alternative_provider",
+      "description": "Replace Lambda with an open-source function-as-a-service, providing improved flexibility and customization.",
+      "implementation_effort": "high",
+      "risk_level": "medium",
+      "steps": [
+        "Choose an open-source function-as-a-service like OpenFaaS",
+        "Migrate the application's functions to the new service",
+        "Configure the service for auto-scaling and resource optimization"
+      ],
+      "cloud_providers": [
+        "AWS",
+        "GCP",
+        "Azure",
+        "Open Source (OpenFaaS)"
+      ]
+    },
+    {
+      "title": "Utilize CloudWatch Logs Insights",
+      "service": "CloudWatch Logs",
+      "current_cost": 665,
+      "potential_savings": 0,
+      "recommendation_type": "optimization",
+      "description": "Utilize CloudWatch Logs Insights to monitor and analyze logs, reducing unnecessary costs.",
+      "implementation_effort": "low",
+      "risk_level": "low",
+      "steps": [
+        "Configure CloudWatch Logs Insights",
+        "Monitor and analyze logs",
+        "Adjust logging settings as needed"
+      ],
+      "cloud_providers": [
+        "AWS",
+        "GCP",
+        "Azure"
+      ]
+    },
+    {
+      "title": "Optimize Route 53 Cost Allocation",
+      "service": "Route 53",
+      "current_cost": 1773,
+      "potential_savings": 177,
+      "recommendation_type": "optimization",
+      "description": "Optimize Route 53 cost allocation by reducing the number of hosted zones and records.",
+      "implementation_effort": "low",
+      "risk_level": "low",
+      "steps": [
+        "Monitor and optimize hosted zones and records",
+        "Remove unnecessary hosted zones and records",
+        "Verify the cost savings"
+      ],
+      "cloud_providers": [
+        "AWS",
+        "GCP",
+        "Azure"
       ]
     }
   ],
   "summary": {
-    "total_potential_savings": 21932,
-    "savings_percentage": 50.11,
+    "total_potential_savings": 1203,
+    "savings_percentage": 8.22,
     "recommendations_count": 8
   }
 }

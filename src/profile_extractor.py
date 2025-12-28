@@ -8,16 +8,20 @@ logger = get_logger("profile_extractor")
 
 def extract_project_profile(description):
 
-    prompt = f"""Extract the project details from this description and return ONLY a Valid JSON object.
+    prompt = f"""You are a cloud Architect. Extract the project details from this description and return ONLY a Valid JSON object. Follow important points mentioned as IMPORTANT.
 
 Description: {description}
 
-You MUST return a valid JSON object with these exact fields:
-- name: (string) Project name extracted from description which is a Short, professional project name.
-- budget_inr_per_month: (integer) Monthly budget in INR.(Important)Value mentioned should be from description only. Handle Indian numbering (e.g. "6,00,000" -> 600000). Remove ALL commas and symbols.(Important) If not mentioned donot return this field.
-- description: (string) Brief description of the project which is concise 1-sentence summary of given project purpose, Do NOT copy the input text verbatim.
-- tech_stack: (dictionary) Key-Value pairs of technology. Capture ALL languages, frameworks, and tools mentioned (e.g., "language": "C++, Python", "cloud": "AWS ParallelCluster etc..") by Categorizing the technologies into specific roles and choose appropriate keys for technologies.
-- non_functional_requirements: (array of strings) List of NFRs (e.g., ["Scalability", "Tolerant", "Security"])
+### You MUST return a valid JSON object with these exact fields:
+- **name**: (string) Project name extracted from description which is a Short, professional project name.
+- **budget_inr_per_month**:Extract the numeric monthly budget in INR (e.g., "50k", "50,000", "5 lakhs")which is integer. 
+                           Monthly budget in INR. **Important** Value mentioned should be from description only. 
+                           Handle Indian numbering (e.g. "6,00,000" -> 600000). Remove ALL commas and symbols.
+                           (Important) If not mentioned donot return this field.
+- **description**: (string) Brief description of the project which is concise 1-sentence summary of given project purpose, Do NOT copy the input text verbatim.
+- **tech_stack**: (dictionary) Key-Value pairs of technology. Capture ALL languages, frameworks, and tools mentioned (e.g., "language": "C++, Python", "cloud": "AWS ParallelCluster etc..") by Categorizing the technologies into specific roles and choose appropriate keys for technologies.
+                  **CRITICAL**: Expand acronyms! (e.g., "MERN" -> MongoDB, Express.js, React, Node.js).
+- **non_functional_requirements**: (array of strings) List of NFRs (e.g., ["Scalability", "Tolerant", "Security"]) if not explicitly stated
 
 Return ONLY the JSON object, nothing else. No markdown, no explanations, no extra other than required valid JSON object.
 

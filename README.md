@@ -67,29 +67,38 @@ cd Cloud Cost Optimizer
 
 ### Step 2: Create Virtual Environment
 
-# On Windows
+### On Windows
+```
 python -m venv venv
 venv\Scripts\activate
+```
 
-# On macOS/Linux
+### On macOS/Linux
+```
 python3 -m venv venv
 source venv/bin/activate
+```
 
 ### Step 3: Install Dependencies
-
+```
 pip install -r requirements.txt
+```
 
 ### Step 4: Configure Environment
 
 ### Copy example configuration
+```
 cp .env.example .env
+```
 
 ### Edit .env with your API key
 ### Open .env and replace:
 ### HUGGINGFACE_API_KEY=hf_your_actual_key_here
 
 ### Run the application
+```
 python main.py
+```
 
 
 ## complete work flow & CLI Menu Options
@@ -135,11 +144,12 @@ $ python main.py
 - Meta LLaMA 3 (8B Instruct)
 - Gemini AI (Only for design assistance and validation)
 
-## Example Description Used:  
+## Example Descriptions Used: 
+- I need a website for my college project. MERN stack. Hosted on AWS. Budget is strictly 15,000 INR. Do not exceed.
 
-We are building a food delivery app for 10,000 users per month. Budget: ₹50,000 per month. Tech stack: Node.js backend, PostgreSQL database,object storage for images, monitoring, and basic analytics. Non-functional requirements: scalability, cost efficiency, uptime monitoring.
+- We are building a food delivery app for 10,000 users per month. Budget: ₹50,000 per month. Tech stack: Node.js backend, PostgreSQL database,object storage for images, monitoring, and basic analytics. Non-functional requirements: scalability, cost efficiency, uptime monitoring.
 
-## Sample Artifacts (Included in Repository) for example
+## Sample Artifacts (Included in Repository) for first example
 
 - sample_artifacts/project_description.txt
 - sample_artifacts/project_profile.json

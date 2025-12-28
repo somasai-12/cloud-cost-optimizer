@@ -37,7 +37,12 @@ def generate_billing(profile):
     - Do NOT assume any default cloud.
     - Total monthly cost MUST be within ±15% of budget: ₹{budget}.
     - You may include AWS, Azure, GCP, or Open Source services. Donot restrict to AWS only.
-    - Higher importance services should cost more.
+    - Higher importance services should cost more like core services(e.g. Compute, Database).
+    - **CHECK TECH STACK**: Look at the 'Tech Stack' above.
+       - If it says "AWS", generate records PRIMARILY for AWS services (e.g., EC2, RDS, S3).
+       - If it says "Azure", generate records PRIMARILY for Azure services (e.g., VMs, Blob Storage).
+       - If it says "GCP", generate records PRIMARILY for Google Cloud services.
+    - **CONSISTENCY**: Do NOT mix cloud providers randomly (e.g., Do NOT put an AWS EC2 instance in the same bill as an Azure VM) unless the description explicitly asks for a multi-cloud setup.
 
     Generate a JSON array with 12-15 usage records for the MONTH of {current_month}.
     Each record must have:

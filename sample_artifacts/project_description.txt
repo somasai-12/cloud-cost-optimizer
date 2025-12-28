@@ -1,1 +1,1 @@
-We are building a food delivery app for 10,000 users per month. Budget: ₹50,000 per month. Tech stack: Node.js backend, PostgreSQL database,object storage for images, monitoring, and basic analytics. Non-functional requirements: scalability, cost efficiency, uptime monitoring.
+"I need a website for my college project. MERN stack. Hosted on AWS. Budget is strictly 15,000 INR. Do not exceed."

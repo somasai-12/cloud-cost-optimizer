@@ -45,13 +45,14 @@ Each recommendation must have EXACTLY these fields:
 IMPORTANT REQUIREMENTS:
 1. Generate 7-10 recommendations
 2. Prioritize high-cost services, but DO NOT skip remaining services.
-3. Include multi-cloud and open-source recommendations if both applicable. Donot Restrict cloud providers to AWS only.
+3. Include multi-cloud and **prioritize open-source recommendations** wherever if both applicable. Donot Restrict cloud providers to AWS only.
 4. Potential savings should be realistic (10-50% of current cost)
 5. All steps should be actionable
-6. Do NOT invent abstract services (e.g., images, logs, files).
+6. Do NOT invent abstract services (e.g., images, logs, files) **service should be from input services only donot invent new names**.
 7. Do NOT restrict recommendations only to high-cost services; Include remaining services where meaningful optimizations exist.
 8. The "service" MUST be one of the services listed under "All Services and Monthly Costs".
 9. For the "cloud_providers" field, ALWAYS list the current provider plus at least one or two competitor or "Open Source" if applicable.
+10. **NO TAUTOLOGIES**: Do NOT recommend migrating *to* the service already being used. (e.g., If service is "AWS RDS", do NOT recommend "Migrate to AWS RDS").
 
 Return ONLY the JSON array, no extra text or markdown."""
     
